@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
-    
-    <title>Weather Dashboard</title>
+
+
 </head>
 
 <body>
@@ -26,11 +27,12 @@
                         <div class="input-group mb-3">
                             <input id="city-search" type="text" class="form-control" placeholder="Orlando,FL">
                             <div class="input-group-append">
-                                <button id="getWeather" class="btn btn-success" type="submit">
+                                <button id="getWeather" class="btn btn-primary" type="submit">
                                     <i id="getweatherIcon" class="fas fa-search" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
+                        <button class="btn btn-primary mb-3" type="button" id="clear-history">Clear history</button>
                         <div id="past-cities"></div>
                     </div>
                 </div>
@@ -39,23 +41,26 @@
                 <div class="row">
                     <div class="card">
                         <div class="card-body" id="current-Weather">
+                            <div class="display-4"></div>
                             <div class="city"></div>
                             <div class="temp"></div>
                             <div class="humidity"></div>
                             <div class="wind"></div>
-                            <div class="UVindex"></div>
+
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <h2 class="card-title">5-Day Forcast</h2>
                 </div>
-                <div class="row" id="forcast">
-                    
+                <div class="row">
+
+                    <div class="forcast"></div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="./assets/JS/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./assets/JS/script.js"></script>
 </body>
