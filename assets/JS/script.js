@@ -3,10 +3,10 @@
     function savingStorage() {
         var city = $("#city-search").val().trim();
         localStorage.setItem("city", city);
-        previousCities();
+        pastCities();
     };
 
-    function previousCities() {
+    function pastCities() {
         var searchCities = localStorage.getItem("city");
         var htmlSearchCities = $("<p>").text(searchCities);
         htmlSearchCities.addClass("form-control d-block bg-white")
@@ -24,12 +24,12 @@
 
         var city = $("#city-search").val().trim();
         searchCityWeather(city);
-        searchCityForcast(city);
-        $(".forcast").empty();
+        searchCityForecast(city);
+        $(".forecast").empty();
         $(".display-4").text(moment().format("MM Do YY"));
     });
     function getUVindex(lat, lon) {
-        var UVquertURL = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon + "&cnt=1";
+        var UVquertURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + APIkey + "&lat=" + lat + "&lon=" + lon + "&cnt=1";
 
         $.ajax({
             url: UVquertURL,
@@ -56,7 +56,7 @@
     };
 
     function searchCityWeather(city) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=" + APIkey;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&APPID=" + APIkey;
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -75,8 +75,8 @@
         });
     };
 
-    function searchCityForcast(city) {
-        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey;
+    function searchCityForecast(city) {
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey;
 
         $.ajax({
             url: queryURL,
@@ -105,13 +105,13 @@
                           currentDay.text(moment(realTime, "X").format("MMM Do YY"))
                           humidityP.text("Humidity :" + response.list[i].main.humidity + " %")
                           tempP.text(response.list[i].main.temp + "(F)")
-                          icon.attr("src", "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon +".png")
+                          icon.attr("src", "https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon +".png")
           
                           
           
                           dayDiv.append(currentDay,tempP, humidityP, icon)
                           initialDiv.append(dayDiv)
-                          $(".forcast").prepend(initialDiv)
+                          $(".forecast").prepend(initialDiv)
                   
                 }   
             }
