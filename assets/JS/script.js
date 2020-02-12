@@ -1,17 +1,43 @@
     var APIkey = "33793265fe00edad75588f2d5de70b87";
+    var cityHistory = [];
+
+
+    searchCityForecast("orlando");
+    searchCityWeather("orlando");
+    pastCities();
+
 
     function savingStorage() {
         var city = $("#city-search").val().trim();
-        localStorage.setItem("city", city);
+        cityHistory.push(city);
+        localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
         pastCities();
     };
 
     function pastCities() {
-        var searchCities = localStorage.getItem("city");
-        var htmlSearchCities = $("<p>").text(searchCities);
-        htmlSearchCities.addClass("form-control d-block bg-white")
-        $("#past-cities").append(htmlSearchCities);
+        var searchCities = JSON.parse(localStorage.getItem("cityHistory"));
+        if (searchCities && searchCities.length > 0){
+            $("#past-cities").empty();
+            for(var i = 0; i< searchCities.length;i++){
+                var htmlSearchCities = $("<button>").text(searchCities[i]);
+                $("#past-cities").append(htmlSearchCities);
+                htmlSearchCities.addClass("usedCities btn btn-secondary btn-lg btn-block")
+
+            }
+            cityHistory = searchCities;
+            console.log(cityHistory);
+        } else {
+            cityHistory = [];
+        }
     }
+ $(document).on("click",".usedCities", function(){
+     var value = $(this).text()
+     $(".forecast").empty();
+     console.log(value);
+     searchCityWeather(value);
+    searchCityForecast(value);
+
+ })
     
     $("#getWeather").click(function (event) {
         event.preventDefault();
@@ -38,20 +64,20 @@
             // console.log(response[0].value);
             var uvSpan = $("<span>");
             uvSpan.addClass("badge");
+
             var uvi = response[0].value;
-            uvSpan.removeClass("badge-success badge-warning badge-danger");
             uvSpan.text("UV index: " + uvi);
 
             if (uvi <= 2) {
                 uvSpan.addClass("badge-success");
-                $("#current-Weather").append(uvSpan);
             } else if (uvi > 2 && uvi < 7) {
                 uvSpan.addClass("badge-warning");
-                $("#current-Weather").append(uvSpan);
-            } else if (uvi >= 8) {
+            } else if (uvi >= 7) {
                 uvSpan.addClass("badge-danger");
-                $("#current-Weather").append(uvSpan);
             }
+
+            $('#current-Weather').find('.badge').remove();
+            $("#current-Weather").append(uvSpan);
         });
     };
 
@@ -92,6 +118,7 @@
           
                   var realTime = response.list[i].dt;
                   // date= new Date(realTime *1000 )
+                    var containerCard = $("<div>").addClass("col-2")
                     var initialDiv = $("<div>")
                     var dayDiv = $("<div>")
                     var currentDay = $('<h5>')
@@ -112,6 +139,7 @@
                           dayDiv.append(currentDay,tempP, humidityP, icon)
                           initialDiv.append(dayDiv)
                           $(".forecast").prepend(initialDiv)
+                         
                   
                 }   
             }
